@@ -2,21 +2,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CarouselPageView extends StatefulWidget{
-  const CarouselPageView({super.key});
-
-  State<CarouselPageView> createState() => _CarouselPageViewState();
+  const CarouselPageView({super.key,required this.pageList});
+  final List<Widget> pageList;
+  @override
+  State<CarouselPageView> createState() => _CareouselPageViewState();
 
 }
 
 class _CareouselPageViewState extends State<CarouselPageView> with TickerProviderStateMixin{
 
-  PageController _pageController = PageController();
-  TabController _tabController = TabController(length:3,vsync: this);
+  late List<Widget> _pageList;
+  late PageController _pageController;
+  late TabController _tabController;
+  int _currentPageIndex = 0;
+  @override
+  void initState()
+  {
+    super.initState();
+    _pageList = widget.pageList;
+    _pageController = PageController();
+    _tabController = TabController(length: 3, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-
     return Stack(
       alignment: .bottomCenter,
       children: <Widget>[
@@ -25,11 +34,7 @@ class _CareouselPageViewState extends State<CarouselPageView> with TickerProvide
           /// Use [Axis.vertical] to scroll vertically.
           controller: _pageController,
           onPageChanged: _handlePageViewChanged,
-          children: <Widget>[
-            Center(child: Text('First Page', style: textTheme.titleLarge)),
-            Center(child: Text('Second Page', style: textTheme.titleLarge)),
-            Center(child: Text('Third Page', style: textTheme.titleLarge)),
-          ],
+          children: _pageList,
         ),
         PageIndicator(
           tabController: _tabController,
@@ -53,7 +58,7 @@ class _CareouselPageViewState extends State<CarouselPageView> with TickerProvide
 
   void _updateCurrentPageIndex(int index) {
     _tabController.index = index;
-    _pageViewController.animateToPage(
+    _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOut,
