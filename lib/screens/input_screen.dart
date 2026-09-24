@@ -11,8 +11,6 @@ class InputScreen extends StatelessWidget{
       alignment: AlignmentGeometry.center,
       children: [
         CarouselPageView(pageList:  <Widget>[
-            Center(child: Text('First Pages')),
-            Center(child: Text('Second Page')),
             BarcodeScannerPage()
           ])
         ],

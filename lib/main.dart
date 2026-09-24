@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scanner_app/screens/connections_screen.dart';
+import 'package:scanner_app/screens/home_screen.dart';
 import 'package:scanner_app/screens/input_screen.dart';
+import 'package:scanner_app/state_management/tabs_controller.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -11,25 +14,50 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.white),
+        colorScheme: ColorScheme.dark(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const Main(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class Main extends StatefulWidget {
+  const Main({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Main> createState() => _MainState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainState extends State<Main> {
+
+  late int _pageIndex;
+
+  @override
+  void initState()
+  {
+    super.initState();
+    _pageIndex=0;
+  }
+
+  static const List<Widget> _pages =[
+    InputScreen(),
+    HomeScreen(),
+    ConnectionsScreen()
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return InputScreen();
+    return TabsController(
+      selectedIndex: _pageIndex,
+      goTo: (i) => setState(() => _pageIndex = i),
+      child: IndexedStack(
+        index:_pageIndex, children: _pages
+      )
+    );
+  }
+
+  void changeIndex(int index)
+  {
+    _pageIndex=index;
   }
 }
