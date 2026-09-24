@@ -1,0 +1,16 @@
+{
+    "@@locale": "en",
+  "helloWorld": "Hello World!",
+  "languageSelector": "Select Language",
+  "english":"English",
+  "romanian":"Romanian",
+  "home":"Home",
+  "inputScreen":"Input",
+  "connections":"Connections",
+  "barcodeScanner":"Barcode Scanner",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+    
+  }
+  
+}

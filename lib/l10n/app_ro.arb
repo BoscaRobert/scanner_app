@@ -1,0 +1,10 @@
+{
+    "@@locale": "ro",
+    "home":"Acasa",
+    "languageSelector": "Selecteaza Limba",
+    "english":"Engleza",
+    "romanian":"Romana",
+    "inputScreen":"Inregistrare",
+    "connections":"Conexiune",
+    "barcodeScanner":"Cititor Bara de Cod"
+}

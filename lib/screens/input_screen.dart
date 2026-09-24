@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:scanner_app/widgets/barcode_scanner.dart';
 import 'package:scanner_app/widgets/carousel_pageview.dart';
 

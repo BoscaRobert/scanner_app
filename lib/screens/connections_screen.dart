@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scanner_app/widgets/navbar.dart';
+import 'package:scanner_app/l10n/app_localizations.dart';
 
 class ConnectionsScreen extends StatefulWidget{
   const ConnectionsScreen({super.key});
@@ -16,7 +17,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen>
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: AppBar(title:Text('Connections')),
+      appBar: AppBar(title:Text(AppLocalizations.of(context)!.connections)),
 
       bottomNavigationBar: Navbar(),
     );

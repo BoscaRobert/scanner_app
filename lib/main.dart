@@ -1,14 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:scanner_app/l10n/app_localizations.dart';
 import 'package:scanner_app/screens/connections_screen.dart';
 import 'package:scanner_app/screens/home_screen.dart';
 import 'package:scanner_app/screens/input_screen.dart';
 import 'package:scanner_app/state_management/tabs_controller.dart';
-void main() {
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:scanner_app/persistance/locale_persistance.dart';
+Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+  _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+  state?.setState(() {
+    state._locale = newLocale;
+  });
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  @override
+  void initState()
+  {
+    super.initState();
+    _loadSavedLocale();
+  }
+
+  Future<void> _loadSavedLocale() async {
+    final saved = await LocaleService.load();
+    if (!mounted) return;
+    setState(() => _locale = saved);
+  }
+
+  Future<void> changeLocale(Locale? newLocale) async {
+    setState(() => _locale = newLocale);
+    await LocaleService.save(newLocale);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,6 +54,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.dark(),
       ),
       home: const Main(),
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: _locale,
     );
   }
 }
