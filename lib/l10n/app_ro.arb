@@ -6,5 +6,17 @@
     "romanian":"Romana",
     "inputScreen":"Inregistrare",
     "connections":"Conexiune",
-    "barcodeScanner":"Cititor Bara de Cod"
+    "barcodeScanner":"Cititor Bara de Cod",
+    "connectionTestYes":"Testul de conexiune a avut success",
+    "connectionTestNo":"Testul de conexiune nu a avut success",
+    "enterHostWarning":"Introdu intai adresa IPv4 al gazdei",
+    "inputPrompt":"Cod de bare introdus:",
+    "barcode":"Cod de bare",
+    "proceed":"Doresti sa trimiti?",
+    "yes":"da",
+    "no":"nu",
+    "barcodeCancel":"cod de bare anulat",
+    "barcodeSentSuccessfully":"cod transmis cu success",
+    "barcodeTransmissionError":"eroare transmitere cod",
+    "hostAddress":"Adresa IPv4 al gazdei"
 }

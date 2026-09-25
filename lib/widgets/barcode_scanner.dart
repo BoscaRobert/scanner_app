@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:scanner_app/dialog/dialog_builder.dart';
+import 'package:scanner_app/networking/connection.dart';
 import 'package:scanner_app/widgets/navbar.dart';
 import 'package:scanner_app/l10n/app_localizations.dart';
+import 'package:scanner_app/widgets/snack_bar_message.dart';
 
 class BarcodeScannerPage extends StatefulWidget{
   const BarcodeScannerPage({super.key});
@@ -44,10 +46,10 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
             if(_canScan==false) return;
             _canScan=false;
             if(result.barcodes.isEmpty || result.barcodes.first.rawValue==''){return;}
-            print("barcode: ${result.barcodes.first.rawValue}");
+            debugPrint("barcode: ${result.barcodes.first.rawValue}");
             await showDialog<void>(
               context: context, 
-              builder: DialogBuilder.buildDialog(context,result,accept,reject), 
+              builder: DialogBuilder.buildDialog(context,result,accept,reject,AppLocalizations.of(context)!.inputPrompt+result.barcodes.first.rawValue!+'\n'+AppLocalizations.of(context)!.proceed), 
             );
           },
         ),
@@ -96,10 +98,10 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   }
   void accept()
   {
-    ;
+    ServerConnection.sendIdToServer(text)
   }
   void reject()
   {
-    ;
+    showMessage(context, text: AppLocalizations.of(context)!.barcodeCancel, background: Colors.yellow);
   }
 }

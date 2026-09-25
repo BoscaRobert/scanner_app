@@ -8,6 +8,18 @@
   "inputScreen":"Input",
   "connections":"Connections",
   "barcodeScanner":"Barcode Scanner",
+  "connectionTestYes":"Connection test successfull",
+  "connectionTestNo":"Connection test unsuccessfull",
+  "hostAddress":"Host IPv4 Address",
+  "enterHostWarning":"Please enter a host",
+  "barcode":"Barcode",
+  "inputPrompt":"Barcode introduced:",
+  "proceed":"Do you want to proceed?",
+  "yes":"yes",
+  "no":"no",
+  "barcodeCancel":"barcode canceled",
+  "barcodeSentSuccessfully":"barcode sent successfully",
+  "barcodeTransmissionError":"barcode transmission error",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
     

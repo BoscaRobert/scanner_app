@@ -6,7 +6,7 @@ import 'package:http/io_client.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class ServerConnection {
-  static String serverHost = '10.143.187.24';
+  static String serverHost = '';
   static bool connectionHealth = false;
 
 
@@ -57,9 +57,38 @@ class ServerConnection {
   {
     client.close();
   }
-}
+ }
 
-  static Future<void> sendToServer() async{
-    
+  static Future<bool> sendIdToServer(String text) async {
+    debugPrint('sent string to server');
+    IOClient client = await newIoClient();
+
+    try {
+      var response = await client.post(
+        Uri(
+          scheme: 'https',
+          host: serverHost,
+          port: 443,
+          path: '/id',
+        ),
+        headers: {'Content-Type': 'text/plain'},
+        body: text,
+      ).timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        connectionHealth = true;
+        debugPrint("Send ID OK: Message: ${response.body}");
+        return true;
+      } else {
+        debugPrint("Send ID Fail: Status code: ${response.statusCode}");
+        return false;
+      }
+    } catch (e) {
+      debugPrint("Send ID Fail");
+      debugPrint("sendIdToServer error $e");
+      return false;
+    } finally {
+      client.close();
+    }
   }
 }

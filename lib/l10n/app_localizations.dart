@@ -145,6 +145,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Barcode Scanner'**
   String get barcodeScanner;
+
+  /// No description provided for @connectionTestYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection test successfull'**
+  String get connectionTestYes;
+
+  /// No description provided for @connectionTestNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection test unsuccessfull'**
+  String get connectionTestNo;
+
+  /// No description provided for @hostAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Host IPv4 Address'**
+  String get hostAddress;
+
+  /// No description provided for @enterHostWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a host'**
+  String get enterHostWarning;
+
+  /// No description provided for @barcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get barcode;
+
+  /// No description provided for @inputPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode introduced:'**
+  String get inputPrompt;
+
+  /// No description provided for @proceed.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to proceed?'**
+  String get proceed;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'no'**
+  String get no;
+
+  /// No description provided for @barcodeCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'barcode canceled'**
+  String get barcodeCancel;
+
+  /// No description provided for @barcodeSentSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'barcode sent successfully'**
+  String get barcodeSentSuccessfully;
+
+  /// No description provided for @barcodeTransmissionError.
+  ///
+  /// In en, this message translates to:
+  /// **'barcode transmission error'**
+  String get barcodeTransmissionError;
 }
 
 class _AppLocalizationsDelegate

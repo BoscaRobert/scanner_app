@@ -32,4 +32,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get barcodeScanner => 'Barcode Scanner';
+
+  @override
+  String get connectionTestYes => 'Connection test successfull';
+
+  @override
+  String get connectionTestNo => 'Connection test unsuccessfull';
+
+  @override
+  String get hostAddress => 'Host IPv4 Address';
+
+  @override
+  String get enterHostWarning => 'Please enter a host';
+
+  @override
+  String get barcode => 'Barcode';
+
+  @override
+  String get inputPrompt => 'Barcode introduced:';
+
+  @override
+  String get proceed => 'Do you want to proceed?';
+
+  @override
+  String get yes => 'yes';
+
+  @override
+  String get no => 'no';
+
+  @override
+  String get barcodeCancel => 'barcode canceled';
+
+  @override
+  String get barcodeSentSuccessfully => 'barcode sent successfully';
+
+  @override
+  String get barcodeTransmissionError => 'barcode transmission error';
 }
