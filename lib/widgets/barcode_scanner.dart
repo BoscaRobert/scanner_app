@@ -19,11 +19,16 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   bool flash = false;
   bool reverseCam = false;
   bool _canScan = false;
+  double _currentZoom = 0;
 
   @override
   void initState() {
     super.initState();
-    _mobileScannerController = MobileScannerController();
+    _mobileScannerController = MobileScannerController(
+      autoZoom: true,
+      initialZoom: 0,
+      cameraResolution: Size(1920,1080),
+    );
   }
 
   @override
@@ -37,30 +42,63 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
           ),
         ),
-        body: MobileScanner(
-          controller: _mobileScannerController,
-          onDetect: (result) async {
-            if (_canScan == false) return;
-            _canScan = false;
-            if (result.barcodes.isEmpty ||
-                result.barcodes.first.rawValue == '') {
-              return;
-            }
-
-            final String scanned = result.barcodes.first.rawValue!;
-            debugPrint("barcode: $scanned");
-
-            await showDialog<void>(
-              context: context,
-              builder: (BuildContext context) => DialogBuilder.buildDialog(
-                context,
-                result,
-                () => accept(scanned),   // wrap so it matches the no-arg signature
-                reject,
-                '${AppLocalizations.of(context)!.inputPrompt}$scanned\n${AppLocalizations.of(context)!.proceed}',
-              ),
-            );
-          },
+        
+        body: Stack(
+          children: [
+          MobileScanner(
+            controller: _mobileScannerController,
+            onDetect: (result) async {
+              if (_canScan == false) return;
+              _canScan = false;
+              if (result.barcodes.isEmpty ||
+                  result.barcodes.first.rawValue == '') {
+                return;
+              }
+          
+              final String scanned = result.barcodes.first.rawValue!;
+              debugPrint("barcode: $scanned");
+          
+              await showDialog<void>(
+                context: context,
+                builder: (BuildContext context) => DialogBuilder.buildDialog(
+                  context,
+                  result,
+                  () => accept(scanned),   // wrap so it matches the no-arg signature
+                  reject,
+                  '${AppLocalizations.of(context)!.inputPrompt}$scanned\n${AppLocalizations.of(context)!.proceed}',
+                ),
+              );
+              
+            },
+          ),
+          Positioned(
+            top:10,
+            left:10,
+            child: Row(
+              children: [
+                FloatingActionButton.small(
+                  onPressed: () async {
+                    try {
+                      await _mobileScannerController.toggleTorch();
+                      changeLense(_mobileScannerController);
+                    } catch (e) {
+                      debugPrint('Cam Lens Change Fail: $e');
+                    }
+                  },
+                  child: Icon(Icons.lens_outlined)
+                ),
+                Center(widthFactor: 1.7,child: 
+                  Slider(value: _currentZoom, min:0, max:1, onChanged: (value) {
+                  setState(() {
+                    _currentZoom=value;
+                  });
+                  _mobileScannerController.setZoomScale(value);
+                  })
+                  ),
+              ],
+            )
+          ),
+          ]
         ),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -138,5 +176,14 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       text: AppLocalizations.of(context)!.barcodeCancel,
       background: Colors.yellow,
     );
+  }
+
+  void changeLense(MobileScannerController con)
+  {
+    con.switchCamera(ToggleLensType());
+    setState(() {
+      _currentZoom=0;
+    });
+    con.resetZoomScale();
   }
 }
