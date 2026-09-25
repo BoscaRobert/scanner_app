@@ -69,7 +69,7 @@ class ServerConnection {
           scheme: 'https',
           host: serverHost,
           port: 443,
-          path: '/id',
+          path: '/insert',
         ),
         headers: {'Content-Type': 'text/plain'},
         body: text,

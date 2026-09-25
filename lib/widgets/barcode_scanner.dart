@@ -115,12 +115,21 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
   }
 
   Future<void> accept(String text) async{
-    ServerConnection.sendIdToServer(text);
-    showMessage(
+    bool result = await ServerConnection.sendIdToServer(text);
+    if(result)
+    {
+      showMessage(
       context,
-      text: "clicked on send $text",
-      background: Colors.yellow,
-    );
+      text: AppLocalizations.of(context)!.barcodeSentSuccessfully,
+      background: Colors.green,);
+    }
+    else
+    {
+      showMessage(
+      context,
+      text: AppLocalizations.of(context)!.barcodeTransmissionError,
+      background: Colors.red,);
+    }
   }
 
   void reject() {
