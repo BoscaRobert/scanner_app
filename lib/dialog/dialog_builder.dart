@@ -1,45 +1,35 @@
-import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:scanner_app/l10n/app_localizations.dart';
+  import 'package:flutter/material.dart';
+  import 'package:mobile_scanner/mobile_scanner.dart';
 
-class DialogBuilder{
-
-  static buildDialog(BuildContext context,BarcodeCapture capture,VoidCallback accept, VoidCallback reject,String text)
-  {
-    
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.barcode),
-          content: Text(
-            text
+  class DialogBuilder {
+    static Widget buildDialog(
+      BuildContext context,
+      BarcodeCapture result,
+      Future<void> Function() accept,
+      VoidCallback reject,
+      String message,
+    ) {
+      return AlertDialog(
+        title: Text('Scan result'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              reject();
+            },
+            child: const Text('Cancel'),
           ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: Text(AppLocalizations.of(context)!.no),
-              onPressed: () {
+          TextButton(
+            onPressed: () async{
+              await accept();
+              if(context.mounted){
                 Navigator.of(context).pop();
-                reject();
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: Text(AppLocalizations.of(context)!.yes),
-              onPressed: () {
-                Navigator.of(context).pop();
-                accept();
-              },
-            ),
-            
-          ],
-        );
-      },
-    );
+              }
+            },
+            child: const Text('Accept'),
+          ),
+        ],
+      );
+    }
   }
-}
