@@ -6,28 +6,27 @@ import 'package:http/io_client.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class ServerConnection {
-  static String serverHost = '192.168.0.106';
+  static String serverHost = '10.143.187.24';
   static bool connectionHealth = false;
 
 
   static Future<IOClient> newIoClient() async {
     
-    final certBytes = (await rootBundle.load('assets/certs/apache.crt'))
-        .buffer.asUint8List();
-    
-    final context = SecurityContext(withTrustedRoots: true)
-      ..setTrustedCertificatesBytes(certBytes);
-    
-    final httpClient = HttpClient(context: context);
+    //TODO(implement real security)
+    final httpClient = HttpClient();
+    httpClient.badCertificateCallback = (_,_,_) => true;
     final client = IOClient(httpClient);
     
     return client;
   }
 
+  static void changeHost(String newHost){
+    serverHost=newHost;
+  }
+
   static Future<bool> test() async{
-
+  debugPrint('initiated test');
   IOClient client = await newIoClient();
-
 
   try {var response = await client.get(
     Uri(
@@ -40,11 +39,12 @@ class ServerConnection {
   if(response.statusCode==200)
   {
     connectionHealth=true;
-    debugPrint("Http Health Check OK");
+    debugPrint("Http Health Check OK: Message: ${response.body}");
     return true;
   }
   else
   {
+    debugPrint("Http Health Check Fail: Status code: ${response.statusCode}");
     return false;
   }
   }
